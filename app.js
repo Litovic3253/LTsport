@@ -68,6 +68,9 @@ function closeModal() {
 function toggleDayVisibility(event) {
     const dayCard = event.currentTarget.closest('.day-card');
     dayCard.classList.toggle('collapsed');
+    const dayIndex = Array.from(dayCard.parentElement.children).indexOf(dayCard);
+    trainingData[dayIndex].collapsed = dayCard.classList.contains('collapsed');
+    saveData();
 }
 
 // Создание элемента упражнения
@@ -134,10 +137,14 @@ function createExerciseElement(dayIndex, exerciseIndex, exercise) {
 function createDayElement(day, index) {
     const dayCard = document.createElement('div');
     dayCard.className = 'day-card';
+    if (day.collapsed) {
+        dayCard.classList.add('collapsed');
+    }
     
     // Шапка дня
     const header = document.createElement('div');
     header.className = 'day-header';
+    header.addEventListener('click', toggleDayVisibility);
     
     const headerContent = document.createElement('div');
     headerContent.style.display = 'flex';
@@ -147,7 +154,6 @@ function createDayElement(day, index) {
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'toggle-day-btn';
     toggleBtn.textContent = '▼';
-    toggleBtn.addEventListener('click', toggleDayVisibility);
     
     const date = document.createElement('span');
     date.className = 'day-date';
@@ -207,19 +213,14 @@ function renderDays() {
     trainingData.forEach((day, index) => {
         container.appendChild(createDayElement(day, index));
     });
-
-    // Прокрутка к последнему добавленному дню
-    if (trainingData.length > 0) {
-        const lastDayCard = container.lastElementChild;
-        lastDayCard.scrollIntoView({ behavior: 'smooth' });
-    }
 }
 
 // Инициализация
 document.querySelector('.add-day-btn').addEventListener('click', () => {
     trainingData.push({
         date: new Date().toISOString(),
-        exercises: []
+        exercises: [],
+        collapsed: false
     });
     saveData();
     renderDays();
