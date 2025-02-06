@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sport Progress Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Лучшие результаты</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="best-results"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="header-controls">
+                <button class="theme-toggle">🌓</button>
+                <h1>🏋️ Тренировочный дневник</h1>
+                <div>
+                    <button class="add-day-btn">+ Новый день</button>
+                    <button class="best-results-btn">🏆 Лучшие</button>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div id="days-container" class="days-container"></div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
